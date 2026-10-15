@@ -8,11 +8,8 @@ interface RiderViewProps {
   onBusSelect: (id: string) => void;
 }
 
-export const RiderView: React.FC<RiderViewProps> = ({ state, selectedBusId, onBusSelect }) => {
-  const [showTicket, setShowTicket] = useState(false);
-  const [busNumber, setBusNumber] = useState('');
-  const [searchMessage, setSearchMessage] = useState('');
-  
+export const RiderView: React.FC<RiderViewProps> = ({ state, selectedBusId }) => {  const [showTicket, setShowTicket] = useState(false);
+
   const selectedBus = state.buses.find(b => b.id === selectedBusId);
   const route = selectedBus ? state.routes.find(r => r.id === selectedBus.routeId) : null;
 

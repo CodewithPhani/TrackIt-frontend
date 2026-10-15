@@ -107,10 +107,18 @@ export function useBusSimulation(authToken?: string) {
             for (const fallbackRoute of MOCK_ROUTES) {
               if (!mergedRoutes.some(route => route.id === fallbackRoute.id)) mergedRoutes.push(fallbackRoute);
             }
-            const mergedBuses = buses.map(bus => ({ ...bus, locationSource: bus.locationSource ?? 'simulation' }));
-            for (const fallbackBus of MOCK_BUSES) {
-              if (!mergedBuses.some(bus => bus.id === fallbackBus.id)) mergedBuses.push(fallbackBus);
-            }
+            const mergedBuses = buses.map(bus => ({
+  ...bus,
+  locationSource: bus.locationSource ?? 'simulation'
+}));
+for (const fallbackBus of MOCK_BUSES) {
+  if (!mergedBuses.some(bus => bus.id === fallbackBus.id)) {
+    mergedBuses.push({
+      ...fallbackBus,
+      locationSource: fallbackBus.locationSource ?? 'simulation',
+    });
+  }
+}
             return { ...prev, routes: mergedRoutes, buses: mergedBuses };
           });
           setIsBackendConnected(true);

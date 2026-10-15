@@ -80,7 +80,7 @@ export const apiService = {
       // Fallback to local env key if backend unaccessible
     }
     return {
-      locationApiKey: import.meta.env.VITE_LOCATION_API_KEY || 'c2d1ebec4d3af3',
+      locationApiKey: import.meta.env.VITE_LOCATION_API_KEY || '',
       status: 'ACTIVE'
     };
   }

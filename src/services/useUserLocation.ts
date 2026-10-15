@@ -65,7 +65,7 @@ function getOrCreateSessionId(): string {
 }
 
 export function useUserLocation(backendConnected: boolean) {
-  const defaultApiKey = localStorage.getItem('user_map_api_key') || import.meta.env.VITE_LOCATION_API_KEY || 'c2d1ebec4d3af3';
+  const defaultApiKey = localStorage.getItem('user_map_api_key') || import.meta.env.VITE_LOCATION_API_KEY || '';
   const [gpsState, setGpsState] = useState<UserGpsState>({
     lat: null,
     lng: null,
@@ -88,7 +88,7 @@ export function useUserLocation(backendConnected: boolean) {
   const sendLocationToBackend = useCallback(async (pos: GeolocationPosition) => {
     const { latitude, longitude, accuracy, heading, speed, altitude } = pos.coords;
     const timestamp = pos.timestamp;
-    const activeApiKey = localStorage.getItem('user_map_api_key') || import.meta.env.VITE_LOCATION_API_KEY || 'c2d1ebec4d3af3';
+    const activeApiKey = localStorage.getItem('user_map_api_key') || import.meta.env.VITE_LOCATION_API_KEY || '';
 
     const rawTelemetry = {
       timestamp: new Date(timestamp).toISOString(),
@@ -100,24 +100,23 @@ export function useUserLocation(backendConnected: boolean) {
       speedMetersPerSec: speed,
       speedKmh: speed ? speed * 3.6 : 0,
       altitudeMeters: altitude,
-      locationApiKey: activeApiKey,
+
       userAgent: navigator.userAgent,
     };
 
-    setGpsState(prev => ({
-      ...prev,
-      lat: latitude,
-      lng: longitude,
-      accuracy,
-      heading,
-      speed,
-      altitude,
-      timestamp,
-      isTracking: true,
-      error: null,
-      locationApiKey: activeApiKey,
-      rawTelemetry,
-    }));
+   setGpsState(prev => ({
+  ...prev,
+  lat: latitude,
+  lng: longitude,
+  accuracy,
+  heading,
+  speed,
+  altitude,
+  timestamp,
+  isTracking: true,
+  error: null,
+  rawTelemetry,
+}));
 
     // Async reverse geocode using Location API key with fallback to OpenStreetMap
     try {

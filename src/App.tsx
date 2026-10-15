@@ -21,8 +21,7 @@ function App() {
   const [perspective, setPerspective] = useState<Perspective>('rider');
   const [selectedBusId, setSelectedBusId] = useState<string | null>(null);
   const { gpsState, nearbyResult, isLoading, startTracking, stopTracking } = useUserLocation(true);
-  const { state, updateSimulationSpeed, toggleSimulation, triggerIncident, isBackendConnected } = useBusSimulation(authToken || undefined);
-
+const { state, updateSimulationSpeed, toggleSimulation, triggerIncident } = useBusSimulation(authToken || undefined);
   if (!authenticatedUser || !userRole) {
     return <AuthPage onAuthenticated={(auth: AuthResult) => { setAuthenticatedUser(auth.name); setUserRole(auth.role); setAuthToken(auth.token); setAssignedBusId(auth.assignedBusId || null); setSelectedBusId(auth.assignedBusId || null); setPerspective(auth.role === 'student' ? 'rider' : auth.role); }} />;
   }
@@ -62,8 +61,8 @@ function App() {
              
              <div className={`grid ${userRole === 'student' ? 'grid-cols-2' : 'grid-cols-1'} bg-surface p-1 rounded-xl border border-white/5 gap-1`}>
                 {userRole === 'student' && <><button 
-                  onClick={() => { setPerspective('rider'); if (userRole === 'admin') setSelectedBusId(null); }}
-                  className={`flex flex-col items-center justify-center py-2 text-xs font-medium rounded-lg transition-all gap-0.5 ${perspective === 'rider' ? 'bg-primary text-white shadow-lg' : 'text-text-muted hover:text-white'}`}
+onClick={() => { setPerspective('rider'); setSelectedBusId(null); }}                  
+className={`flex flex-col items-center justify-center py-2 text-xs font-medium rounded-lg transition-all gap-0.5 ${perspective === 'rider' ? 'bg-primary text-white shadow-lg' : 'text-text-muted hover:text-white'}`}
                 >
                    <UserRound className="w-4 h-4"/> Rider
                 </button>
